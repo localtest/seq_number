@@ -4,19 +4,16 @@
 --local random = tonumber(KEYS[2])
 
 local biz = 1
-local random = 2
 
 -- which time the timestamp bit record the time offset from
 -- 2015-01-01
 local _TIME_BEGIN = 1420041600
-local _SEC_BIT_NUM = 24
-local _BIZ_BIT_NUM = 20
-local _RANDOM_BIT_NUM = 16
-local _ID_BIT_NUM = 16
+local _SEC_BIT_NUM = 31
+local _BIZ_BIT_NUM = 3
+local _ID_BIT_NUM = 18
 
 
 -- local cjson = require "cjson"
-
 local parser = require("redis.parser")
 
 -- id generate
@@ -43,7 +40,6 @@ if (id) then
     end
 else
     -- redis.log(redis.LOG_NOTICE, "seq_num id false")
-    -- return false
 end
 id = id % id_bit_mod
 
@@ -57,9 +53,8 @@ if (sec) then
     sec = sec - _TIME_BEGIN
 else
     -- redis.log(redis.LOG_NOTICE, "seq_num sec false")
-    -- return false
 	ngx.say('error')
 end
 
-local seq_number = math.ldexp(sec, _SEC_BIT_NUM) + math.ldexp(biz, _BIZ_BIT_NUM) + math.ldexp(random, _RANDOM_BIT_NUM) + id
+local seq_number = math.ldexp(sec, _SEC_BIT_NUM) + math.ldexp(biz, _BIZ_BIT_NUM) + id
 ngx.say(seq_number)
