@@ -15,10 +15,11 @@ local _RANDOM_BIT_NUM = 16
 local _ID_BIT_NUM = 16
 
 
-local cjson = require "cjson"
+-- local cjson = require "cjson"
+
 local parser = require("redis.parser")
 
--- id 16bit
+-- id generate
 local res = ngx.location.capture("/incr", {
 	args = "key=seq_num&val=2"
 })
@@ -46,7 +47,7 @@ end
 local id_bit_mod = math.ldexp(1, _ID_BIT_NUM)
 id = id % id_bit_mod
 
--- sec 10 bit
+-- sec generate
 local res = ngx.location.capture("/time", {})
 if res.status == 200 then
 	local reply = parser.parse_reply(res.body)
@@ -60,6 +61,5 @@ else
 	ngx.say('error')
 end
 
--- sec*2^24 + biz*2^20 + random*2^16 + id
 local seq_number = math.ldexp(sec, _SEC_BIT_NUM) + math.ldexp(biz, _BIZ_BIT_NUM) + math.ldexp(random, _RANDOM_BIT_NUM) + id
 ngx.say(seq_number)
