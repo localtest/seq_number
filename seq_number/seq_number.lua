@@ -1,8 +1,3 @@
--- biz 01 - 15
---local biz = tonumber(KEYS[1])
--- random 01 - 15
---local random = tonumber(KEYS[2])
-
 local biz = 1
 
 -- which time the timestamp bit record the time offset from
