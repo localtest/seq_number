@@ -6,6 +6,10 @@
 local biz = 1
 local random = 2
 
+-- which time the timestamp bit record the time offset from
+-- 2015-01-01
+local _TIME_BEGIN = 1420041600
+
 
 local cjson = require "cjson"
 local parser = require("redis.parser")
@@ -45,7 +49,7 @@ if res.status == 200 then
 	sec = reply[1]
 end
 if (sec) then
-    sec = sec - 1420041600
+    sec = sec - _TIME_BEGIN
 else
     -- redis.log(redis.LOG_NOTICE, "seq_num sec false")
     -- return false
