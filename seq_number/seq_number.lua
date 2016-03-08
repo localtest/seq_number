@@ -1,4 +1,9 @@
-local biz = 1
+local args = ngx.req.get_uri_args()
+if (args["biz"] == nil) then
+	ngx.say('error')
+	ngx.exit(400)
+end
+local biz = tonumber(args["biz"])
 
 -- which time the timestamp bit record the time offset from
 -- 2015-01-01
