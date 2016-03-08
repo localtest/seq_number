@@ -28,14 +28,15 @@ if res.status == 200 then
 	id = reply;
 end
 if (id) then
+	id_bit_mod = math.ldexp(1, _ID_BIT_NUM)
     -- max odd
-    if (id >= 65535 and (id % 2 == 1)) then
+    if (id >= id_bit_mod-1 and (id % 2 == 1)) then
 		local res = ngx.location.capture("/set", {
 			args = "key=seq_num&val=-1"
 		})
     end
     -- max even number
-    if (id >= 65534 and (id %2 == 0)) then
+    if (id >= id_bit_mod-2 and (id %2 == 0)) then
 		local res = ngx.location.capture("/set", {
 			args = "key=seq_num&val=0"
 		})
@@ -44,7 +45,6 @@ else
     -- redis.log(redis.LOG_NOTICE, "seq_num id false")
     -- return false
 end
-local id_bit_mod = math.ldexp(1, _ID_BIT_NUM)
 id = id % id_bit_mod
 
 -- sec generate
