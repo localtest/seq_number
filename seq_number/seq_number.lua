@@ -56,8 +56,6 @@ else
 	ngx.say('error')
 end
 
-
 -- sec*2^24 + biz*2^20 + random*2^16 + id
--- local seq_number = 'sec: '..sec..', biz: '..biz..', random: '..random..', id: '..id
-local seq_number = sec*16777216 + biz*1048576 + random*65536 + id
+local seq_number = math.ldexp(sec, 24) + math.ldexp(biz, 20) + math.ldexp(random, 16) + id
 ngx.say(seq_number)
