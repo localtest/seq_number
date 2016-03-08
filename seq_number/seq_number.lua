@@ -9,6 +9,10 @@ local random = 2
 -- which time the timestamp bit record the time offset from
 -- 2015-01-01
 local _TIME_BEGIN = 1420041600
+local _SEC_BIT_NUM = 24
+local _BIZ_BIT_NUM = 20
+local _RANDOM_BIT_NUM = 16
+local _ID_BIT_NUM = 16
 
 
 local cjson = require "cjson"
@@ -39,8 +43,8 @@ else
     -- redis.log(redis.LOG_NOTICE, "seq_num id false")
     -- return false
 end
-id = id % 65536
-
+local id_bit_mod = math.ldexp(1, _ID_BIT_NUM)
+id = id % id_bit_mod
 
 -- sec 10 bit
 local res = ngx.location.capture("/time", {})
@@ -57,5 +61,5 @@ else
 end
 
 -- sec*2^24 + biz*2^20 + random*2^16 + id
-local seq_number = math.ldexp(sec, 24) + math.ldexp(biz, 20) + math.ldexp(random, 16) + id
+local seq_number = math.ldexp(sec, _SEC_BIT_NUM) + math.ldexp(biz, _BIZ_BIT_NUM) + math.ldexp(random, _RANDOM_BIT_NUM) + id
 ngx.say(seq_number)
