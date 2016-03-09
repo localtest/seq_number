@@ -2,6 +2,13 @@
 
 	避免PHP直连redis, phpredis低版本客户端整形溢出问题
 
+示例:
+
+	curl "http://localhost:8080/seq_number/?biz=1"
+
+	参数:
+		biz business code, seq_number/seq_number.lua可以指定这一字段长度
+
 依赖:
 
 	nginx module
