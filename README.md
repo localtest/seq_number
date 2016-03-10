@@ -18,7 +18,3 @@
 		3. lua-nginx-module
 		4. redis2-nginx-module
 		5. echo-nginx-module
-	
-Todo:
-	
-	加入 Instance Id

@@ -5,11 +5,17 @@ if (args["biz"] == nil) then
 end
 local biz = tonumber(args["biz"])
 
+local ins = 0
+if (args["ins"] ~= nil) then
+	ins = tonumber(args["ins"])
+end
+
 -- which time the timestamp bit record the time offset from
 -- 2015-01-01
 local _TIME_BEGIN = 1420041600
 local _SEC_BIT_NUM = 31
 local _BIZ_BIT_NUM = 3
+local _INS_BIT_NUM = 0
 local _ID_BIT_NUM = 18
 
 
@@ -56,5 +62,5 @@ else
 	ngx.say('error')
 end
 
-local seq_number = math.ldexp(sec, _SEC_BIT_NUM) + math.ldexp(biz, _BIZ_BIT_NUM) + id
+local seq_number = math.ldexp(sec, _SEC_BIT_NUM) + math.ldexp(biz, _BIZ_BIT_NUM) + math.ldexp(ins, _INS_BIT_NUM) + id
 ngx.say(seq_number)
